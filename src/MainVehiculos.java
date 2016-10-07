@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by usu26 on 03/10/2016.
  */
@@ -20,25 +23,29 @@ public class MainVehiculos {
 
         System.out.println(registro.obtenerTodos());
 
-        registro
-                .obtenerVehiculo("4749JAV")
-                .ifPresent(
-                        coche -> System.out.println("Coche con matricula 4749JAV: " + coche)
-                );
+        Coche coche = registro.obtenerVehiculo("4749JAV");
+        if (coche != null) {
+            System.out.println("Coche con matrícula: " + coche);
+        }
 
-        registro
-                .obtenerVehiculosMarca("Lexus")
-                // esto es un bucle tradicional expresado con Java 8
-                .forEach(
-                        coche -> System.out.println(coche)
-                );
 
-        registro
-                .obtenerVehiculoPrecioMax()
-                // esta expresión es equivalente a verificar diferente de null con Java 8
-                .ifPresent(
-                        coche -> System.out.println("Coche Max precio: " + coche)
-                );
+        List<Coche> coche_marca_list = new ArrayList<>(registro.obtenerVehiculosMarca("Lexus"));
+
+        for(Coche coche_marca : coche_marca_list){
+            System.out.println("Coche con marca Lexus: "+ coche_marca);
+
+        }
+//        registro
+//                .obtenerVehiculosMarca("Lexus")
+//                // esto es un bucle tradicional expresado con Java 8
+//                .forEach(
+//                        coche -> System.out.println(coche)
+//                );
+
+        Coche max = registro.obtenerVehiculoPrecioMax();
+        if (max != null) {
+            System.out.println("Coche Max precio: " + max);
+        }
 
         System.out.println("Eliminando coche con matricula 1234ENG");
         registro
@@ -47,3 +54,4 @@ public class MainVehiculos {
         System.out.println(registro.obtenerTodos());
 
     }
+}
